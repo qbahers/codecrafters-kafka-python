@@ -7,7 +7,10 @@ def main():
     print("Logs from your program will appear here!")
 
     server = socket.create_server(("localhost", 9092), reuse_port=True)
-    server.accept() # wait for client
+    connection, address = server.accept() # wait for client
+    correlation_id = (7).to_bytes(4, signed=True)
+    response_message_size = (0).to_bytes(4, signed=True)
+    connection.sendall(response_message_size + correlation_id)
 
 
 if __name__ == "__main__":
